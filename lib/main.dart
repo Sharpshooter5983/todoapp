@@ -12,7 +12,7 @@ class ToDoListApp extends StatelessWidget{
     return MaterialApp(
       title: "Your To-Do List", //title at the top
       theme: ThemeData( //information about the theme of the app
-        primaryColor: Color.fromARGB(255, 22, 91, 147), //primary color scheme of the app
+        primaryColor: Color.fromARGB(255, 59, 22, 147), //primary color scheme of the app
       ),
       home: TodoListScreen(),
       routes: {

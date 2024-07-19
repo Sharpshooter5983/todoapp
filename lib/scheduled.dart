@@ -1,6 +1,5 @@
 //second page for the "scheduled" page
 import 'package:flutter/material.dart';
-import 'dart:async';
 
 class SecondPage extends StatelessWidget{
   const SecondPage({super.key});
@@ -18,3 +17,4 @@ class SecondPage extends StatelessWidget{
   }
 }
 
+  
