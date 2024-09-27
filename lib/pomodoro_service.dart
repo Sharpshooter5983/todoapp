@@ -22,7 +22,7 @@ class PomodoroService {
     }
     
     _isActive = true;
-    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       if (_seconds > 0) {
         _seconds--;
       } else {

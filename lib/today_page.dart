@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'main.dart';  // Import this to use TodoItem
-import 'todo_provider.dart';  // Import this file which should contain TodoItem and TodoProvider
-
 
 class TodayPage extends StatelessWidget {
   final List<TodoItem> todayTasks;

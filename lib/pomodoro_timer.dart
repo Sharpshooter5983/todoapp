@@ -4,7 +4,7 @@ import 'pomodoro_service.dart';
 class PomodoroTimer extends StatefulWidget {
   final PomodoroService pomodoroService;
 
-  PomodoroTimer({required this.pomodoroService});
+  const PomodoroTimer({super.key, required this.pomodoroService});
 
   @override
   _PomodoroTimerState createState() => _PomodoroTimerState();
@@ -15,7 +15,7 @@ class _PomodoroTimerState extends State<PomodoroTimer> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Pomodoro Timer'),
+        title: const Text('Pomodoro Timer'),
       ),
       body: Center(
         child: StreamBuilder<int>(
@@ -30,14 +30,14 @@ class _PomodoroTimerState extends State<PomodoroTimer> {
               children: <Widget>[
                 Text(
                   widget.pomodoroService.isBreak ? 'Break Time' : 'Focus Time',
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                  style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Text(
                   timerDisplay,
-                  style: TextStyle(fontSize: 80, fontWeight: FontWeight.bold),
+                  style: const TextStyle(fontSize: 80, fontWeight: FontWeight.bold),
                 ),
-                SizedBox(height: 30),
+                const SizedBox(height: 30),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -46,15 +46,15 @@ class _PomodoroTimerState extends State<PomodoroTimer> {
                       child: Text(widget.pomodoroService.isActive ? 'Stop' : 'Start'),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: widget.pomodoroService.isActive ? Colors.red : Colors.green,
-                        padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+                        padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
                       ),
                     ),
-                    SizedBox(width: 20),
+                    const SizedBox(width: 20),
                     ElevatedButton(
                       onPressed: widget.pomodoroService.resetTimer,
-                      child: Text('Reset'),
+                      child: const Text('Reset'),
                       style: ElevatedButton.styleFrom(
-                        padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+                        padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
                       ),
                     ),
                   ],

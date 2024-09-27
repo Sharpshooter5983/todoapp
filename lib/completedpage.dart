@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:listapp/main.dart';
-import 'todo_provider.dart';  // Import this file which should contain TodoItem and TodoProvider
-
 
 class CompletedPage extends StatefulWidget {
   @override
