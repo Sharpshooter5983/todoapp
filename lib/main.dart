@@ -3,10 +3,23 @@ import 'today_page.dart';
 import 'completedpage.dart';
 import 'pomodoro_timer.dart';
 import 'pomodoro_service.dart';
+import 'package:mysql_client/mysql_client.dart';
+import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
+import 'todo_api_controller.dart';
 
 void main() {
-  runApp(ToDoListApp());
+  final apiController = TodoApiController(baseUrl: 'http://localhost:8080/api');
+  final todoProvider = TodoProviderWithApi(apiController: apiController);
+  
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => todoProvider,
+      child: ToDoListApp(),
+    ),
+  );
 }
+
 
 class ToDoListApp extends StatefulWidget {
   @override
@@ -54,6 +67,11 @@ class TodoListScreen extends StatefulWidget {
 }
 
 class _TodoListScreenState extends State<TodoListScreen> {
+   @override
+  void initState() {
+    super.initState();
+    Provider.of<TodoProviderWithApi>(context, listen: false).loadTodos();
+  }
   final List<TodoItem> _todoItems = [];
   final List<String> _categories = ['Personal', 'Work', 'Shopping', 'Studying', 'Uncategorized'];
 

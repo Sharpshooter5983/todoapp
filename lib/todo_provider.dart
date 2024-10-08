@@ -1,5 +1,4 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 
 class TodoItem {
   String title;
@@ -16,6 +15,26 @@ class TodoItem {
     this.dueDate,
   });
 
+  factory TodoItem.fromJson(Map<String, dynamic> json) {
+    return TodoItem(
+      title: json['title'],
+      description: json['description'] ?? '',
+      completed: json['completed'] ?? false,
+      category: json['category'] ?? 'Uncategorized',
+      dueDate: json['dueDate'] != null ? DateTime.parse(json['dueDate']) : null,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'title': title,
+      'description': description,
+      'completed': completed,
+      'category': category,
+      'dueDate': dueDate?.toIso8601String(),
+    };
+  }
+
   bool isScheduledForToday() {
     if (dueDate == null) return false;
     final now = DateTime.now();
@@ -29,6 +48,12 @@ class TodoProvider extends ChangeNotifier {
   List<TodoItem> _todoItems = [];
 
   List<TodoItem> get todoItems => _todoItems;
+  
+  // Add this setter
+  set todoItems(List<TodoItem> items) {
+    _todoItems = items;
+    notifyListeners();
+  }
 
   List<TodoItem> get todayTasks => _todoItems.where((item) => item.isScheduledForToday()).toList();
 
