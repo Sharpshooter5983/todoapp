@@ -1,45 +1,66 @@
-/*import 'dart:convert';
+import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'todo_provider.dart';
+import 'main.dart';  // import TodoItem
 
-class ApiService {
-  final String baseUrl = 'https://your-api-base-url.com/api'; // Replace with your actual API base URL
+class APIService {
+  static const String baseUrl = 'http://localhost:8080';  // Replace with your API base URL
 
   Future<List<TodoItem>> fetchTodos() async {
     final response = await http.get(Uri.parse('$baseUrl/todos'));
 
     if (response.statusCode == 200) {
       List<dynamic> todosJson = json.decode(response.body);
-      return todosJson.map((json) => TodoItem.fromJson(json)).toList();
+      return todosJson.map((json) => TodoItem(
+        title: json['title'],
+        description: json['description'] ?? '',
+        completed: json['completed'] ?? false,
+        category: json['category'] ?? 'Uncategorized',
+        dueDate: json['dueDate'] != null ? DateTime.parse(json['dueDate']) : null,
+        priority: json['priority'] ?? 1,
+      )).toList();
     } else {
       throw Exception('Failed to load todos');
     }
   }
 
-  Future<TodoItem> createTodo(TodoItem todo) async {
+  Future<void> addTodo(TodoItem todo) async {
     final response = await http.post(
       Uri.parse('$baseUrl/todos'),
-      headers: {'Content-Type': 'application/json'},
-      body: json.encode(todo.toJson()),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, dynamic>{
+        'title': todo.title,
+        'description': todo.description,
+        'completed': todo.completed,
+        'category': todo.category,
+        'dueDate': todo.dueDate?.toIso8601String(),
+        'priority': todo.priority,
+      }),
     );
 
-    if (response.statusCode == 201) {
-      return TodoItem.fromJson(json.decode(response.body));
-    } else {
-      throw Exception('Failed to create todo');
+    if (response.statusCode != 201) {
+      throw Exception('Failed to add todo');
     }
   }
 
-  Future<TodoItem> updateTodo(TodoItem todo) async {
+  Future<void> updateTodo(TodoItem todo) async {
     final response = await http.put(
-      Uri.parse('$baseUrl/todos/${todo.id}'),
-      headers: {'Content-Type': 'application/json'},
-      body: json.encode(todo.toJson()),
+      Uri.parse('$baseUrl/todos/${todo}'),  // NEED TO CHECK THISLINE
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, dynamic>{
+        'title': todo.title,
+        'description': todo.description,
+        'completed': todo.completed,
+        'category': todo.category,
+        'dueDate': todo.dueDate?.toIso8601String(),
+        'priority': todo.priority,
+      }),
     );
 
-    if (response.statusCode == 200) {
-      return TodoItem.fromJson(json.decode(response.body));
-    } else {
+    if (response.statusCode != 200) {
       throw Exception('Failed to update todo');
     }
   }
@@ -52,4 +73,3 @@ class ApiService {
     }
   }
 }
-*/

@@ -23,7 +23,6 @@ class TodayPage extends StatelessWidget {
                   trailing: Checkbox(
                     value: todayTasks[index].completed,
                     onChanged: (bool? value) {
-                      // You might want to implement a way to update the original list here
                     },
                   ),
                 );
